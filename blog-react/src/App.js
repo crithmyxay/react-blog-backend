@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Posts from './Posts.js'
-import SinglePost from './entry.js'
+
+import axios from 'axios';
+import Posts from './Posts.js';
+import SinglePost from './entry.js';
+import EditPost from './PostEditor.js'
 
 class App extends Component {
   constructor(props) {
@@ -15,8 +18,8 @@ class App extends Component {
 
   componentDidMount() {
     // Here I can call this.setState for the blog posts!
-    fetch('http://localhost:3000/blog')
-      .then(response => response.json())
+    axios.get('http://localhost:3000/blog')
+      .then(response => response.data)
       .then(blogPosts => {
         this.setState({
           posts: blogPosts,
@@ -28,6 +31,15 @@ class App extends Component {
 
   render() {
     console.log(this.state)
+
+    let whichPost = () => {
+      if (this.state.posts[this.state.index].title === '') {
+        return <EditPost post={this.state.posts[this.state.index]} handleChangeTitle={this._setTitle} handleChangeContent={this._setContent} />
+      } else {
+        return <SinglePost post={this.state.posts[this.state.index]} />
+      }
+    };
+
     return (
       <div className="App">
         <header className="App-header">
@@ -35,9 +47,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         {this.state.posts.length > 0 ? (
-          <div class="stuff">
-            <Posts posts={this.state.posts} handleClick={this._setIndex} />
-            <SinglePost post={this.state.posts[this.state.index]} />
+          <div className="stuff">
+            <Posts posts={this.state.posts} handleClick={this._setIndex} addPostClick={this._addPost} />
+            {whichPost()}
           </div>
         ) : null}
       </div>
@@ -50,18 +62,42 @@ class App extends Component {
     });
   }
 
-  _setPost = () => {
+  _setTitle = (name) => {
     this.setState({
       posts: this.state.posts.map((post, i) => {
         if (i === this.state.index) {
           return {
-            title: post.title,
-            content: post
+            key: i,
+            title: name,
+            content: post.content
           }
         } else {
           return post
         }
       })
+    })
+  }
+
+  _setContent = (cont) => {
+    this.setState({
+      posts: this.state.posts.map((post, i) => {
+        if (i === this.state.index) {
+          return {
+            key: i,
+            title: post.title,
+            content: cont
+          }
+        } else {
+          return post
+        }
+      })
+    })
+  }
+
+  _addPost  = () => {
+    this.setState({
+      posts: this.state.posts.concat({title: '', content: ''}),
+      index: this.state.posts.length
     })
   }
 
