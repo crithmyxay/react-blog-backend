@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddPost from './addPost.js'
 
 const drawPosts = (props) => {
   const allPosts = props.posts.map( (post, i)=>{
@@ -11,8 +12,9 @@ const drawPosts = (props) => {
   })
 
     return (
-      <div className="posts">
+      <div>
         {allPosts}
+        <AddPost addPostClick={props.addPostClick} />
       </div>
   )
 }

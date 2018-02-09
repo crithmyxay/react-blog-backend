@@ -6,12 +6,12 @@ const SinglePost = (props) => {
   
   return (
     <div className="blogPost">
-      <textarea className="title" value ={postValues.title} /><br/>
-      <textarea className="content" value ={postValues.content} /><br />
+      <textarea className="title" value ={postValues.title} onChange={(event)=>props.handleChangeTitle(event.target.value)} /><br/>
+      <textarea className="content" value ={postValues.content} onChange={(event)=>props.handleChangeContent(event.target.value)} /><br />
     </div>
   )
 }
 
-// onChange={(event)=>props.handleChange(event.target.value)}
+
 
 export default SinglePost

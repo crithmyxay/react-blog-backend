@@ -4,6 +4,8 @@ body {
   font-family: sans-serif;
 }
 
+
+
 .stuff {
   display: flex;
   flex-direction: row;
@@ -17,7 +19,7 @@ body {
   width: 70%;
 }
 
-textarea {
+textarea, button {
   border: 1px solid black;
 }
 
