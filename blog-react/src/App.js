@@ -3,6 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
+
 import Posts from './Posts.js';
 import SinglePost from './entry.js';
 import EditPost from './PostEditor.js'
@@ -40,11 +45,12 @@ class App extends Component {
       }
     };
 
-    return (
+  return (
+    <Router>
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Check this crap out</h1>
         </header>
         {this.state.posts.length > 0 ? (
           <div className="stuff">
@@ -53,6 +59,7 @@ class App extends Component {
           </div>
         ) : null}
       </div>
+    </Router>
     );
   }
 
@@ -100,7 +107,6 @@ class App extends Component {
       index: this.state.posts.length
     })
   }
-
 }
 
 export default App;
